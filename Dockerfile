@@ -4,9 +4,13 @@
 FROM qnib/supervisor
 MAINTAINER "Christian Kniep <christian@qnib.org>"
 
-### ETCD INST BELOW
-ADD yum-cache/etcd /tmp/yum-cache/etcd
-RUN yum install -y /tmp/yum-cache/etcd/qnib-etcd-0.3.0-20140423.2.x86_64.rpm
-RUN rm -fr /tmp/yum-cache/etcd/
+### ETCD INST
+ADD etc/yum.repos.d/qnib.repo /etc/yum.repos.d/
+RUN echo "20140816.1"; yum clean all; yum install -y qnib-etcd
+RUN mkdir -p /var/lib/etcd
 ADD etc/supervisord.d/etcd.ini /etc/supervisord.d/etcd.ini
 
+EXPOSE 4001
+EXPOSE 7001
+
+CMD /bin/supervisord -c /etc/supervisord.conf
