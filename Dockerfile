@@ -10,7 +10,4 @@ RUN mkdir -p /var/lib/etcd
 ADD etc/supervisord.d/etcd.ini /etc/supervisord.d/etcd.ini
 ADD root/bin/start_etcd.sh /root/bin/start_etcd.sh
 
-EXPOSE 4001
-EXPOSE 7001
-
 CMD /bin/supervisord -c /etc/supervisord.conf
