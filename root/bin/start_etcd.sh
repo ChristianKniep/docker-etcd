@@ -1,5 +1,10 @@
 #!/bin/bash
 
+ETCD_HOST=HOSTNAME
+if [[ ! ${ETCD_HOST} =~ [0-9]+ ]];then
+    echo "ETCD_HOST ${ETCD_HOST} should match [0-9]+"
+    exit 1
+fi
 BINARY=/usr/bin/etcd
 trap stop SIGTERM
 
@@ -11,7 +16,7 @@ function wait_proc {
 }
 
 cd /var/lib/etcd/
-/usr/bin/etcd -c HOSTNAME:4001 -s HOSTNAME:7001 &
+/usr/bin/etcd -c ${ETCD_HOST}:4001 -s ${ETCD_HOST}:7001 &
 MYPID=$(ps -ef|grep -v grep |grep ${BINARY}|awk '{print $2}')
 
 function stop () {
