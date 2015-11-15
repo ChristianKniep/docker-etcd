@@ -1,11 +1,9 @@
 ###### ETCD images
-# A docker image that includes
 # - etcd
 FROM qnib/terminal
-MAINTAINER "Christian Kniep <christian@qnib.org>"
 
 ### ETCD INST
-RUN echo "20140816.1"; yum clean all; yum install -y qnib-etcd
+RUN echo "2015-11-15.1"; yum clean all; yum install -y etcd
 RUN mkdir -p /var/lib/etcd
 ADD etc/supervisord.d/etcd.ini /etc/supervisord.d/etcd.ini
 ADD root/bin/start_etcd.sh /root/bin/start_etcd.sh
